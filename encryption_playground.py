@@ -8,7 +8,7 @@ HOW TO RUN:
 
 WHAT'S INSIDE:
   - Caesar Cipher   (ancient substitution cipher)
-  - Vigenère Cipher (poly-alphabetic cipher)
+  - Vigenere Cipher (poly-alphabetic cipher)
   - AES Encryption  (modern symmetric encryption)
   - Base64 Encoding (encoding, not encryption – learn the difference!)
 """
@@ -116,7 +116,7 @@ def caesar_cipher(text: str, shift: int, decrypt: bool = False):
 
 def vigenere_cipher(text: str, key: str, decrypt: bool = False):
     """
-    Vigenère Cipher: like Caesar but the shift changes with each letter,
+    Vigenere Cipher: like Caesar but the shift changes with each letter,
     driven by a repeating keyword.
     """
     key = key.upper()
@@ -221,16 +221,16 @@ st.divider()
 
 with st.sidebar:
     st.header("⚙️ Settings")
-    method = st.selectbox(
+    method = st.radio(
         "Choose an encryption method",
-        ["Caesar Cipher", "Vigenère Cipher", "AES-256", "Base64 Encoding"],
+        ["Caesar Cipher", "Vigenere Cipher", "AES-256", "Base64 Encoding"],
     )
 
     st.markdown("---")
     st.markdown("""
     **Difficulty guide**
     - 🟢 Caesar – easiest
-    - 🟡 Vigenère – medium
+    - 🟡 Vigenere – medium
     - 🔴 AES-256 – industry standard
     - ⚪ Base64 – not encryption!
     """)
@@ -290,8 +290,8 @@ if method == "Caesar Cipher":
 # ② VIGENÈRE CIPHER
 # ══════════════════════════════════════════════
 
-elif method == "Vigenère Cipher":
-    st.header("② Vigenère Cipher")
+elif method == "Vigenere Cipher":
+    st.header("② Vigenere Cipher")
 
     st.markdown("""
     <div class="explainer">
@@ -488,4 +488,4 @@ st.caption(
     "🎓 Educational use only. "
     "For real-world secrets, use battle-tested libraries like `cryptography` or `PyNaCl` — "
     "never roll your own crypto in production."
-)
+      )
