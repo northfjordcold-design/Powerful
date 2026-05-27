@@ -16,9 +16,6 @@ WHAT'S INSIDE:
 import streamlit as st
 import base64
 import os
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-from cryptography.hazmat.backends import default_backend
-from cryptography.hazmat.primitives import padding
 
 # ─────────────────────────────────────────────
 # PAGE CONFIG  (must be the very first st. call)
@@ -85,7 +82,7 @@ st.markdown("""
 # CIPHER IMPLEMENTATIONS
 # ══════════════════════════════════════════════
 
-def caesar_cipher(text: str, shift: int, decrypt: bool = False) -> tuple[str, list[str]]:
+def caesar_cipher(text: str, shift: int, decrypt: bool = False):
     """
     Caesar Cipher: shift each letter by a fixed number of positions.
     Returns the result AND a list of steps showing how each letter moved.
@@ -117,7 +114,7 @@ def caesar_cipher(text: str, shift: int, decrypt: bool = False) -> tuple[str, li
     return "".join(result), steps
 
 
-def vigenere_cipher(text: str, key: str, decrypt: bool = False) -> tuple[str, list[str]]:
+def vigenere_cipher(text: str, key: str, decrypt: bool = False):
     """
     Vigenère Cipher: like Caesar but the shift changes with each letter,
     driven by a repeating keyword.
@@ -147,7 +144,7 @@ def vigenere_cipher(text: str, key: str, decrypt: bool = False) -> tuple[str, li
     return "".join(result), steps
 
 
-def aes_encrypt(plaintext: str, key_hex: str) -> tuple[str, str, str]:
+def aes_encrypt(plaintext: str, key_hex: str):
     """
     AES-256-CBC encryption.
     Returns: (ciphertext_hex, iv_hex, status_message)
@@ -156,6 +153,10 @@ def aes_encrypt(plaintext: str, key_hex: str) -> tuple[str, str, str]:
       - A random 16-byte IV (Initialization Vector) per encryption
       - Padding to fill incomplete blocks
     """
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives import padding
+
     try:
         key_bytes = bytes.fromhex(key_hex)
         if len(key_bytes) != 32:
@@ -176,7 +177,10 @@ def aes_encrypt(plaintext: str, key_hex: str) -> tuple[str, str, str]:
         return "", "", f"❌ Error: {e}"
 
 
-def aes_decrypt(ciphertext_hex: str, key_hex: str, iv_hex: str) -> tuple[str, str]:
+def aes_decrypt(ciphertext_hex: str, key_hex: str, iv_hex: str):
+    from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+    from cryptography.hazmat.backends import default_backend
+    from cryptography.hazmat.primitives import padding
     """
     AES-256-CBC decryption.
     You MUST supply the same key AND the same IV used during encryption.
